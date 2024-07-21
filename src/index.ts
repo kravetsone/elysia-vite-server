@@ -2,6 +2,9 @@ import { staticPlugin } from "@elysiajs/static";
 import { Elysia } from "elysia";
 import type { InlineConfig, ViteDevServer } from "vite";
 
+/**
+ * Configure {@link vite} plugin
+ */
 export interface ViteOptions {
 	/**
 	 * in `development` mode it starts `vite` and in `production` it just served like static.
@@ -17,17 +20,14 @@ export interface ViteOptions {
 	/**
 	 * Configure [static plugin](https://elysiajs.com/plugins/static) options in `production` mode
 	 *
-	 * @default
-	 * {
-	 *		assets: clientDirectory,
-	 *		prefix: "/",
-	 *		directive: "immutable",
-	 *		maxAge: 31556952000
-	 * }
+	 * Pass `false` to disable static plugin
 	 */
-	static?: Parameters<typeof staticPlugin>[0];
+	static?: Parameters<typeof staticPlugin>[0] | false;
 }
 
+/**
+ * Plugin which start and decorate `vite` dev server in `development` and in `production` mode serve static (if it needed)
+ */
 export async function vite(options?: ViteOptions) {
 	const mode = options?.mode ?? process.env.NODE_ENV ?? "development";
 
@@ -55,7 +55,7 @@ export async function vite(options?: ViteOptions) {
 			(await import("elysia-connect-middleware")).connect(vite.middlewares),
 		);
 	} else {
-		app.use(staticPlugin(options?.static));
+		if (options?.static !== false) app.use(staticPlugin(options?.static));
 	}
 
 	return app;
