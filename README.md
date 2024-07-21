@@ -51,7 +51,7 @@ new Elysia()
             },
         })
     )
-    .get("/", async ({ vite, request, set }) => {
+    .all("*", async ({ vite, request, set }) => {
         try {
             let template: string | undefined;
             let render: any;
@@ -85,7 +85,7 @@ new Elysia()
                 set.status = 500;
 
                 return e.stack;
-            }
+            } else console.log(e);
         }
     })
     .listen(3000, console.log);
