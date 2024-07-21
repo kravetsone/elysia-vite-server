@@ -98,3 +98,5 @@ new Elysia()
 | mode?   | "development" \| "production"                                 | process.env.NODE_ENV \|\| "development" | In `development` mode it starts `vite` and in `production` it just served static (if it needed).                                   |
 | vite?   | InlineConfig                                                  |                                         | Configure `vite` server in `development` mode.                                                                                     |
 | static? | [StaticOptions](https://elysiajs.com/plugins/static) \| false |                                         | Configure [static plugin](https://elysiajs.com/plugins/static) options in `production` mode. Pass `false` to disable static plugin |
+
+Powered by [elysia-connect-middleware](https://github.com/kravetsone/elysia-connect-middleware)!
